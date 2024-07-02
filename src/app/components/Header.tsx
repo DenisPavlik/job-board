@@ -13,7 +13,7 @@ export default async function Header() {
         </Link>
         <nav className="flex gap-2">
           {!user && (
-            <Link className="bg-gray-200 py-2 px-4 rounded-md" href={signInUrl}>
+            <Link className="bg-gray-200 py-1 px-2 sm:py-2 sm:px-4 rounded-md" href={signInUrl}>
               Login
             </Link>
           )}
@@ -22,10 +22,10 @@ export default async function Header() {
               'use server';
               await signOut();
             }}>
-              <button type="submit" className="bg-gray-200 py-2 px-4 rounded-md">Logout</button>
+              <button type="submit" className="bg-gray-200 py-1 px-2 sm:py-2 sm:px-4 rounded-md">Logout</button>
             </form>
           )}
-          <Link className="bg-blue-600 text-white py-2 px-4 rounded-md" href={"/new-listing"}>
+          <Link className="bg-blue-600 text-white py-1 px-2 sm:py-2 sm:px-4 rounded-md" href={"/new-listing"}>
             Post a job
           </Link>
         </nav>
