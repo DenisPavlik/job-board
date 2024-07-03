@@ -3,7 +3,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import type { Job } from "@/models/Job";
-import TimeAgo from "react-timeago";
+import TimeAgo from "./TimeAgo";
+import Link from "next/link";
+import axios from "axios";
+import Image from "next/image";
 
 export default function JobRow({ jobDoc }: { jobDoc: Job }) {
   return (
@@ -14,23 +17,44 @@ export default function JobRow({ jobDoc }: { jobDoc: Job }) {
         </div>
         <div className="flex gap-4">
           <div className="content-center">
-            <img
-              className="size-12"
-              src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg"
-              alt="spotyfiIcon"
-            />
+            <Image src={jobDoc.jobIcon} alt="jobIcon" width={500} height={500} className="size-14 object-cover" />
           </div>
           <div className="grow sm:flex">
             <div className="grow">
-              <div className="text-gray-500 text-sm">{jobDoc.orgName}</div>
-              <div className="font-bold mb-1 text-lg">{jobDoc.title}</div>
-              <div className="text-gray-400 text-sm">
-                Remote &middot; New York, US &middot; Full-time
+              <div>
+                <Link href={`/jobs/${jobDoc.orgId}`} className="text-gray-500 text-sm hover:underline">
+                  {jobDoc.orgName || "?"}
+                </Link>
+              </div>
+              <div className="font-bold mb-1 text-lg">
+                <Link href={`/show/${jobDoc._id}`} className="hover:underline">{jobDoc.title}</Link>
+              </div>
+              <div className="text-gray-400 text-sm capitalize">
+                {jobDoc.remote} &middot; {jobDoc.city}, {jobDoc.country}{" "}
+                &middot; {jobDoc.type}-time
+                {jobDoc.isAdmin && (
+                  <>
+                    {" "}
+                    &middot; <Link href={"/jobs/edit/" + jobDoc._id}>
+                      Edit
+                    </Link>{" "}
+                    &middot;{" "}
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        await axios.delete("/api/jobs?id=" + jobDoc._id);
+                        window.location.reload();
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
               </div>
             </div>
             {jobDoc.createdAt && (
               <div className="content-end text-gray-500 text-sm">
-                <TimeAgo date={jobDoc.createdAt} />
+                <TimeAgo createdAt={jobDoc.createdAt} />
               </div>
             )}
           </div>

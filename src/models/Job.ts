@@ -3,6 +3,7 @@ import { Schema, models, model } from "mongoose";
 export type Job = {
   _id: string;
   title: string;
+  description: string;
   orgName?: string;
   remote: string;
   type: string;
@@ -10,6 +11,9 @@ export type Job = {
   country: string;
   state: string;
   city: string;
+  countryId: string;
+  stateId: string;
+  cityId: string;
   jobIcon: string;
   orgId: string;
   contactPhoto: string;
@@ -18,17 +22,22 @@ export type Job = {
   contactEmail: string;
   createdAt: string;
   updatedAt: string;
+  isAdmin?: boolean;
 };
 
 const JobScema = new Schema(
   {
     title: { type: String, required: true },
+    description: { type: String, required: true },
     remote: { type: String, required: true },
     type: { type: String, required: true },
     salary: { type: Number, required: true },
     country: { type: String, required: true },
     state: { type: String, required: true },
     city: { type: String, required: true },
+    countryId: { type: String, required: true },
+    stateId: { type: String, required: true },
+    cityId: { type: String, required: true },
     jobIcon: { type: String },
     orgId: { type: String, required: true },
     contactPhoto: { type: String },

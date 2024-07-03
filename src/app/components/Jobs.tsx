@@ -1,6 +1,7 @@
+import type { Job } from "@/models/Job";
 import JobRow from "./JobRow";
 
-export default function Jobs({header, jobs}: {header: string, jobs: object[]}) {
+export default function Jobs({header, jobs}: {header: string, jobs: Job[]}) {
   return (
     <section className="bg-slate-200 py-6 rounded-3xl">
       <div className="container">
